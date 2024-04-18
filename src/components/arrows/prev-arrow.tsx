@@ -1,0 +1,21 @@
+import { ArrowBackIosNew } from "@mui/icons-material";
+import { Box } from "@mui/material";
+import { MouseEventHandler } from "react";
+type Props = {
+  onClick?: MouseEventHandler<HTMLDivElement>;
+};
+function PreviousArrows({ onClick }: Props) {
+  return (
+    <Box
+      className="w-14 h-14 rounded-r-full text-white bg-neutral-800/20 hover:bg-opacity-100 cursor-pointer duration-300 flex justify-center items-center absolute left-[10px] top-1/2 -translate-y-1/2 hover:scale-110 z-[999]"
+      component="div"
+      onClick={onClick}
+    >
+      <Box component="span" className="text-xl">
+        <ArrowBackIosNew />
+      </Box>
+    </Box>
+  );
+}
+
+export default PreviousArrows;
