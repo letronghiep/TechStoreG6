@@ -8,12 +8,12 @@ type Props = {
 };
 export default function SimpleSlider({ images }: Props) {
   const settings: TSliderSimpleProps = {
-    dots: true,
     infinite: true,
-    speed: 500,
+    speed: 300,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
+    arrows: true,
   };
   return (
     <Slider {...settings}>
@@ -21,7 +21,7 @@ export default function SimpleSlider({ images }: Props) {
         <img
           key={item._id}
           className="max-h-[180px] lg:max-h-[400px] object-cover"
-          src={item.image_url}
+          src={item.avatar}
           alt="banner"
         />
       ))}

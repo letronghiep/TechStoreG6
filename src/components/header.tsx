@@ -4,18 +4,16 @@ import { useState } from "react";
 import { FaBars, FaCartPlus, FaUserCircle } from "react-icons/fa";
 import logo from "../assets/images/logo.png";
 import mobile_logo from "../assets/images/mobile.png";
-import { useGetAllCategoriesQuery } from "../services/categories";
-import MultiLevelMenu from "./category/multi-level-menu";
 
 function Header() {
-  const { data, isFetching } = useGetAllCategoriesQuery();
+  // const { data, isFetching } = useGetAllCategoriesQuery();
   // Handle Open Menu
   const [onOpenMenu, setOnOpenMenu] = useState<boolean>(false);
   const handleOpenMenu = () => {
     setOnOpenMenu(!onOpenMenu);
   };
-  const categories = data?.metadata;
-  if (isFetching) return null;
+  // const categories = data?.metadata;
+  // if (isFetching) return null;
   return (
     <Box
       component="div"
@@ -121,6 +119,7 @@ function Header() {
         sx={{
           backgroundColor: { xs: "blue", md: "#fff" },
           display: "flex",
+          padding: '10px 20px'
         }}
       >
         <Container
@@ -143,14 +142,14 @@ function Header() {
             </a>
           </Box>
           <Box component="div" display="flex" alignItems="center">
-            {categories && (
+            {/* {categories && (
               <MultiLevelMenu
                 categories={categories}
                 onClick={handleOpenMenu}
                 onOpenMenu={onOpenMenu}
               />
-            )}
-            <Box
+            )} */}
+            {/* <Box
               component="p"
               sx={{
                 paddingTop: { xs: "0px", md: "5px" },
@@ -172,7 +171,7 @@ function Header() {
               }}
             >
               Our Dear
-            </Box>
+            </Box> */}
           </Box>
           <div className="flex items-center gap-x-3 ml-auto">
             <a className="relative">

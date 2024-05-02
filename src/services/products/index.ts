@@ -1,6 +1,6 @@
 // Create Api
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { ProductsData } from "~/models/data-fetching";
+import { ProductData, ProductsData } from "~/models/data-fetching";
 
 export const productApi = createApi({
   reducerPath: "productApi",
@@ -12,12 +12,10 @@ export const productApi = createApi({
         method: "GET",
       }),
     }),
-    getProductById: builder.query<ProductsData, void>({
-      query: (id) => ({
-        url: `product/${id}`,
-        method: "GET",
-      }),
+    getProductBySlug: builder.query<ProductData, string>({
+      query: (slug) => `product/${slug}`,
     }),
   }),
 });
-export const { useGetAllProductsInHomeQuery, useGetProductByIdQuery } = productApi;
+export const { useGetAllProductsInHomeQuery, useGetProductBySlugQuery } =
+  productApi;
