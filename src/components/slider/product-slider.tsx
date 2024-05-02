@@ -4,17 +4,23 @@ import "slick-carousel/slick/slick.css";
 import { Product } from "~/models/product";
 import NextArrows from "../arrows/next-arrows";
 import PreviousArrows from "../arrows/prev-arrow";
-import ProductItem from "../product/product-item";
+import ProductItem from "../product/products-slide/product-item";
 import { TSliderSimpleProps } from "./TSliderSimpleProps";
 type Props = {
   products: Product[] | undefined;
+  slidesToShow: number;
+  slidesToScroll: number;
 };
-export default function ProductSlider({ products }: Props) {
+export default function ProductSlider({
+  products,
+  slidesToShow = 5,
+  slidesToScroll = 5,
+}: Props) {
   const settings: TSliderSimpleProps = {
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToShow: slidesToShow,
+    slidesToScroll: slidesToScroll,
     arrows: true,
     className: "relative",
     nextArrow: <NextArrows />,
@@ -52,9 +58,11 @@ export default function ProductSlider({ products }: Props) {
       {products?.map((item: Product) => (
         <ProductItem
           slug={item.slug}
-          image_url={item.image_url}
+          avatar={item.avatar}
           price={item.price}
           quantity_import={item.quantity_import}
+          quantity_sold={item.quantity_sold}
+          rateAvg={item.rateAvg}
           promotion={item.promotion}
           name={item.name}
         />

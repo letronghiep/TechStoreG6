@@ -1,9 +1,11 @@
 export type TSliderSimpleProps = {
+  customPaging?: (i: number) => JSX.Element;
   alt?: string;
   arrows?: boolean;
   className?: string;
   dots?: boolean;
   fade?: boolean;
+  dotsClass?: string;
   height?: string;
   images?: string[];
   infinite?: boolean;

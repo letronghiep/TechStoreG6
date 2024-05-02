@@ -1,18 +1,20 @@
 import { Brand } from "./brand";
+import { Category } from "./category";
 
 export type Product = {
   _id?: object | Key | null | undefined;
-  name?: string;
-  slug?: string;
+  name: string;
+  slug: string;
   brand_id?: Brand;
-  category?: object;
+  category_id?: Category;
   color?: object;
   description?: string;
   price: number;
   quantity_import: number;
-  quantity_sold?: number;
+  quantity_sold: number;
   promotion: number;
-  image_url: string;
+  avatar: string;
+  gallery?: string[];
   isPublished?: boolean;
   specs?: SpecProduct[];
   sku?: string;
