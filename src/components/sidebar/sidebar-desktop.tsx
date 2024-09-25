@@ -11,31 +11,8 @@ import { cloneElement, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Category } from "~/models/category";
 
-// The Menu is built on top of Popper v2, so it accepts `modifiers` prop that will be passed to the Popper.
-// https://popper.js.org/docs/v2/modifiers/offset/
-interface MenuButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-  menu: React.ReactElement;
-  open: boolean;
-  onOpen: (
-    event?:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLButtonElement>
-  ) => void;
-  onLeaveMenu: (callback: () => boolean) => void;
-  label: string;
-}
 // Define a type for the function options
-type ModifierOptions = {
-  offset: (args: { placement: string }) => [number, number];
-};
-
-// Define a type for the modifier
-type Modifier = {
-  name: string;
-  options: ModifierOptions;
-};
-const modifiers: Modifier[] = [
+const modifiers = [
   {
     name: "offset",
     options: {
@@ -57,13 +34,11 @@ function NavMenuButton({
   onLeaveMenu,
   label,
   ...props
-}: Omit<MenuButtonProps, "color">) {
+}) {
   const isOnButton = useRef(false);
   const internalOpen = useRef(open);
 
-  const handleButtonKeyDown = (
-    event: React.KeyboardEvent<HTMLButtonElement>
-  ) => {
+  const handleButtonKeyDown = (event) => {
     internalOpen.current = open;
     if (event.key === "ArrowDown" || event.key === "ArrowUp") {
       event.preventDefault();
@@ -132,11 +107,9 @@ function NavMenuButton({
     </Dropdown>
   );
 }
-type Props = {
-  categories: Category[] | undefined;
-};
-export default function SidebarDesktop({ categories }: Props) {
-  const [parentCategories, setParentCategories] = useState<Category[]>([]);
+
+function SidebarDesktop({ categories }) {
+  const [parentCategories, setParentCategories] = useState([]);
   useEffect(() => {
     if (categories) {
       const filteredCategories = categories.filter(
@@ -145,24 +118,23 @@ export default function SidebarDesktop({ categories }: Props) {
       setParentCategories(filteredCategories);
     }
   }, [categories]);
-  const [menuIndex, setMenuIndex] = useState<null | number>(null);
+  const [menuIndex, setMenuIndex] = useState(null);
   const itemProps = {
     onClick: () => setMenuIndex(null),
   };
-  const createHandleLeaveMenu =
-    (index: number) => (getIsOnButton: () => boolean) => {
-      setTimeout(() => {
-        const isOnButton = getIsOnButton();
-        if (!isOnButton) {
-          setMenuIndex((latestIndex: null | number) => {
-            if (index === latestIndex) {
-              return null;
-            }
-            return latestIndex;
-          });
-        }
-      }, 200);
-    };
+  const createHandleLeaveMenu = (index) => (getIsOnButton) => {
+    setTimeout(() => {
+      const isOnButton = getIsOnButton();
+      if (!isOnButton) {
+        setMenuIndex((latestIndex) => {
+          if (index === latestIndex) {
+            return null;
+          }
+          return latestIndex;
+        });
+      }
+    }, 200);
+  };
   return (
     <Sheet
       sx={{
@@ -175,7 +147,6 @@ export default function SidebarDesktop({ categories }: Props) {
       <List
         sx={{
           fontSize: "12px",
-
           borderRadius: "md",
           padding: "0px",
           backgroundColor: "white",
@@ -185,13 +156,13 @@ export default function SidebarDesktop({ categories }: Props) {
       >
         {categories &&
           parentCategories.map((item, index) => (
-            <ListItem>
+            <ListItem key={item._id}>
               <Link
                 className="w-full hover:bg-inherit relative"
                 to={`${item.slug}`}
               >
                 <NavMenuButton
-                  label={item.category_name as string}
+                  label={item.category_name}
                   open={menuIndex === index}
                   onOpen={() => setMenuIndex(index)}
                   onLeaveMenu={createHandleLeaveMenu(index)}
@@ -233,3 +204,5 @@ export default function SidebarDesktop({ categories }: Props) {
     </Sheet>
   );
 }
+
+export default SidebarDesktop;
